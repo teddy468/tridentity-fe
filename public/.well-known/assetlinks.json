@@ -1,0 +1,22 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "io.tri.tridentity",
+      "sha256_cert_fingerprints": [
+        "03:9B:59:B4:D9:C3:1B:6C:20:5F:7E:97:B3:08:DB:D7:F8:A3:B5:52:6D:11:C2:3D:25:F4:EA:44:EC:D7:FC:5E"
+      ]
+    }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "io.tri.tridentity",
+      "sha256_cert_fingerprints": [
+        "EF:10:DD:9F:F8:60:CF:1A:41:72:9D:E5:8D:84:EC:FE:63:E5:77:5F:AE:1B:E1:56:68:F8:31:2D:8A:EF:77:B9"
+      ]
+    }
+  }
+]

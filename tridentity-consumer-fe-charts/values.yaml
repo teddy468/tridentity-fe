@@ -1,0 +1,22 @@
+global:
+  namespace: develop
+  app: tridentity-consumer-fe
+
+deployment:
+  name: tridentity-consumer-fe-deploy
+  replicas: 1
+  image:
+    repository: tridentity-tcr.tencentcloudcr.com/develop/tridentity-fe
+    tag: latest
+  port: 3000
+
+service:
+  name: tridentity-consumer-fe-svc
+  type: ClusterIP
+  internalPort: 3000
+  externalPort: 80
+
+ingress:
+  name: tridentity-consumer-fe-ingress
+  class: qcloud
+  existLbId: lb-iqv1wp50

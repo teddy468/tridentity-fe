@@ -1,0 +1,101 @@
+/* Setup Font */
+@font-face {
+  font-family: "Graphik";
+  font-style: thin;
+  font-weight: 300;
+  src: url(../fonts/Graphik-Thin.otf) format("opentype");
+}
+
+@font-face {
+  font-family: "Graphik";
+  font-style: normal;
+  font-weight: 400;
+  src: url(../fonts/Graphik-Regular.otf) format("opentype");
+}
+
+@font-face {
+  font-family: "Graphik";
+  font-style: medium;
+  font-weight: 500;
+  src: url(../fonts/Graphik-Medium.otf) format("opentype");
+}
+
+@font-face {
+  font-family: "Graphik";
+  font-style: bold;
+  font-weight: 600;
+  src: url(../fonts/Graphik-Semibold.otf) format("opentype");
+}
+
+@font-face {
+  font-family: "Graphik";
+  font-style: bolder;
+  font-weight: 700;
+  src: url(../fonts/Graphik-Bold.otf) format("opentype");
+}
+
+/* CSS Reset */
+html,
+body,
+div,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+em,
+img,
+strong,
+sub,
+sup,
+abbr,
+acronym,
+address,
+code,
+fieldset,
+form,
+legend {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-family: "Graphik";
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+body {
+  line-height: 1;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}

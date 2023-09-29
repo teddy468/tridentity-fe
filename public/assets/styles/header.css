@@ -1,0 +1,37 @@
+#header {
+  color: red;
+  height: 84px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1100;
+  background: linear-gradient(324deg, #0b0b0b 38.44%, #161a18 85.8%);
+  box-shadow: 0px 8px 24px 0px rgba(247, 238, 136, 0.16);
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 24px;
+}
+
+.menu-wrapper {
+  width: 50%;
+}
+
+.menu-wrapper .menu-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.menu-wrapper .menu-container .menu-item {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  margin: 0 1rem;
+}

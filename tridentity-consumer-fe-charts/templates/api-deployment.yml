@@ -1,0 +1,28 @@
+{{- $global:= .Values.global -}}
+{{- $deployment:= .Values.deployment -}}
+---
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{$deployment.name}}
+  labels:
+    app: {{$global.app}}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+  namespace: {{ $global.namespace }}
+spec:
+  replicas: {{ $deployment.replicas }}
+  selector:
+    matchLabels:
+      app: {{$global.app}}
+  template:
+    metadata:
+      labels:
+        app: {{$global.app}}
+    spec:
+      containers:
+        - name: {{$deployment.name}}
+          image: "{{ $deployment.image.repository }}:{{$deployment.image.tag}}"
+          ports:
+          - containerPort: {{ $deployment.port }}
+

@@ -1,0 +1,80 @@
+@import url(reset.css);
+@import url(header.css);
+@import url(footer.css);
+
+#privacyPolicy {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(324deg, #0b0b0b 38.44%, #161a18 85.8%);
+  box-shadow: 0px 8px 24px 0px rgba(247, 238, 136, 0.16);
+  color: #ffffff;
+  font-weight: 500;
+}
+
+#privacyPolicy h1 {
+  font-weight: 600;
+  font-size: 32px;
+}
+
+#privacyPolicy h2 {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 2.5rem;
+}
+
+#privacyPolicy h3 {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+#privacyPolicy h3.selected {
+  background: linear-gradient(94.22deg, #fdcd9d 0%, #f7ef82 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#privacyPolicy h3:hover {
+  background: linear-gradient(94.22deg, #fdcd9d 0%, #f7ef82 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#privacyPolicy h4 {
+  font-weight: 400;
+  color: white;
+}
+
+#privacyPolicy p {
+  font-weight: 400;
+  font-size: 16px;
+  text-align: justify;
+  color: #ababb1;
+  line-height: 1.5rem;
+}
+
+.privacy-policy-wrapper {
+  padding-top: calc(84px + 64px);
+  padding-bottom: 2rem;
+  display: flex;
+}
+
+.privacy-policy-wrapper .list-wrapper {
+  width: 25%;
+  padding-left: 8rem;
+}
+
+.privacy-policy-wrapper .list-wrapper .list-item {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid #4e4e54;
+}
+
+.privacy-policy-wrapper .content-wrapper {
+  width: 75%;
+  border-left: 1px solid #4e4e54;
+  padding-left: 2rem;
+  padding-right: 8rem;
+}
+
+.privacy-policy-wrapper .content-wrapper .sub-content {
+  padding-top: 3rem;
+}

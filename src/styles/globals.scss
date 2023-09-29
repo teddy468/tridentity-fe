@@ -1,0 +1,126 @@
+@font-face {
+  font-family: "Graphik";
+  font-style: normal;
+  font-weight: 300;
+  src: url(../../public/assets/fonts/Graphik-Thin.otf) format("opentype");
+}
+
+@font-face {
+  font-family: "Graphik";
+  font-style: normal;
+  font-weight: 400;
+  src: url(../../public/assets/fonts/Graphik-Regular.otf) format("opentype");
+}
+
+@font-face {
+  font-family: "Graphik";
+  font-style: normal;
+  font-weight: 500;
+  src: url(../../public/assets/fonts/Graphik-Medium.otf) format("opentype");
+}
+
+@font-face {
+  font-family: "Graphik";
+  font-style: normal;
+  font-weight: 600;
+  src: url(../../public/assets/fonts/Graphik-Semibold.otf) format("opentype");
+}
+
+@font-face {
+  font-family: "Graphik";
+  font-style: normal;
+  font-weight: 700;
+  src: url(../../public/assets/fonts/Graphik-Bold.otf) format("opentype");
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  padding: 0 !important;
+}
+
+body {
+  background: linear-gradient(324deg, #0b0b0b 38.44%, #161a18 85.8%);
+  font-family: "Graphik";
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  appearance: textfield;
+}
+
+* {
+  &::-webkit-scrollbar {
+    width: 16px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #b7b7b7;
+    border-radius: 8px;
+    border: 4px solid transparent;
+    background-clip: padding-box;
+    width: 16px;
+
+    &:hover {
+      background: #98a2b3;
+      background-clip: padding-box;
+    }
+    &:active {
+      background: #667085;
+      background-clip: padding-box;
+    }
+  }
+}
+
+#__next-build-watcher {
+  display: none;
+}
+
+.select-pagination {
+  background: transparent;
+
+  .select__control {
+    background: transparent;
+    color: white;
+
+    .select__single-value {
+      color: white;
+    }
+  }
+}
+
+.MuiBox-root {
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+// Fix sticky menu item in select element
+#menu {
+  &-inputPhone,
+  &-gender {
+    position: absolute;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+  }
+}
