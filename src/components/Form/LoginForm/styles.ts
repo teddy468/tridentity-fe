@@ -1,4 +1,13 @@
-import { EyeIcon, EyeSlashIcon, GoogleIcon, LockIcon, ProfileIcon, TriFoodLogo } from "@/assets/icons";
+import {
+  EyeIcon,
+  EyeSlashIcon,
+  GoogleIcon,
+  LockIcon,
+  MetamaskIcon,
+  ProfileIcon,
+  TriFoodLogo,
+  WalletConnectIcon,
+} from "@/assets/icons";
 import { Box, Button, Divider, Modal, styled, Theme } from "@mui/material";
 import Link from "next/link";
 
@@ -10,7 +19,8 @@ export const StyledModal = styled(Modal)(() => ({
 }));
 
 export const Container = styled(Box)(({ theme }) => ({
-  background: "linear-gradient(324deg, rgba(11, 11, 11, 0.8) 38.44%, rgba(22, 26, 24, 0.8) 85.8%)",
+  background:
+    "linear-gradient(324deg, rgba(11, 11, 11, 0.8) 38.44%, rgba(22, 26, 24, 0.8) 85.8%)",
   backdropFilter: "blur(12px)",
   color: "rgb(128, 128, 137)",
   padding: "32px 100px",
@@ -148,4 +158,21 @@ export const GuestBrowseTextWrapper = styled(Box)(() => ({
   textDecoration: "underline",
   fontSize: 14,
   paddingLeft: "0.5rem",
+}));
+
+export const ConnetWalletWrapper = styled("div")(() => ({
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-between",
+  width: "100%",
+}));
+
+export const MetamaskLogo = styled(MetamaskIcon)(() => ({
+  width: 50,
+  height: 50,
+}));
+
+export const WalletConnetLogo = styled(WalletConnectIcon)(() => ({
+  width: 50,
+  height: 50,
 }));

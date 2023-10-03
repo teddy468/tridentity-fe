@@ -9,10 +9,13 @@ import { REFRESH_TOKEN_KEY, TOKEN_KEY } from "@/commons/constants";
 import { handleRefreshToken } from "@/commons/utils/axios";
 import { getCartsSync } from "./cartSagas";
 import { cartActions } from "../reducer/cartReducer";
-import Cookies from 'universal-cookie'
+import Cookies from "universal-cookie";
 import { USER_INFO } from "@/commons/constants/user";
 
-export const getUserAllDataSync = createAction<CallbackPayload<null, null, null>>("user/getUserAllDataSync");
+export const getUserAllDataSync = createAction<
+  CallbackPayload<null, null, null>
+>("user/getUserAllDataSync");
+
 function* getUserAllData() {
   try {
     yield put(getUserInfoAsync({ payload: undefined }));
@@ -20,8 +23,12 @@ function* getUserAllData() {
   } catch (error) {}
 }
 
-export const loginLocalAsync = createAction<CallbackPayload<null, true, false>>("user/loginLocalAsync");
-function* loginLocal({ payload: { onSuccess = () => null, onError = () => null } }: CallbackAction<null, true, false>) {
+export const loginLocalAsync = createAction<CallbackPayload<null, true, false>>(
+  "user/loginLocalAsync"
+);
+function* loginLocal({
+  payload: { onSuccess = () => null, onError = () => null },
+}: CallbackAction<null, true, false>) {
   try {
     const refreshToken: string = yield call(handleRefreshToken);
     if (!refreshToken) throw {};
@@ -37,21 +44,28 @@ function* loginLocal({ payload: { onSuccess = () => null, onError = () => null }
   }
 }
 
-export const postTriAppLoginAsync = createAction<any>("user/postTridentLoginAsync");
+export const postTriAppLoginAsync = createAction<any>(
+  "user/postTridentLoginAsync"
+);
 
-function* postTriAppLogin({ payload: { payload, onSuccess = (data: any) => data, onError = () => null } }: any) {
+function* postTriAppLogin({
+  payload: { payload, onSuccess = (data: any) => data, onError = () => null },
+}: any) {
   try {
-    const res: AxiosResponse<any> = yield call(authRequests.loginTriApp, payload);
+    const res: AxiosResponse<any> = yield call(
+      authRequests.loginTriApp,
+      payload
+    );
     if (!res.data) throw new Error("Can not login by QR");
     localStorage.setItem(TOKEN_KEY, res.data.access_token);
     localStorage.setItem(REFRESH_TOKEN_KEY, res.data.refresh_token);
     const user = jwt<UserDecode>(res.data.access_token);
-    
+
     const userName = res.data.user.username;
     const userAvatar = res.data.user.avatar;
     const cookie = new Cookies();
-    cookie.set(USER_INFO.NAME, userName)
-    cookie.set(USER_INFO.AVATAR, userAvatar)
+    cookie.set(USER_INFO.NAME, userName);
+    cookie.set(USER_INFO.AVATAR, userAvatar);
     yield put(userActions.setUser(user));
     yield put(userActions.setUserInfo(res.data.user));
     yield put(getUserAllDataSync({ payload: null }));
@@ -61,8 +75,11 @@ function* postTriAppLogin({ payload: { payload, onSuccess = (data: any) => data,
   }
 }
 
-export const logoutAsync = createAction<CallbackPayload<null, true, false>>("user/logoutAsync");
-function* logout({ payload: { onSuccess = () => null, onError = () => null } }: CallbackAction<null, true, false>) {
+export const logoutAsync =
+  createAction<CallbackPayload<null, true, false>>("user/logoutAsync");
+function* logout({
+  payload: { onSuccess = () => null, onError = () => null },
+}: CallbackAction<null, true, false>) {
   try {
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(REFRESH_TOKEN_KEY);
@@ -76,13 +93,17 @@ function* logout({ payload: { onSuccess = () => null, onError = () => null } }: 
   }
 }
 
-export const postUserAsync = createAction<CallbackPayload<any, any, LoginError>>("user/postUserAsync");
+export const postUserAsync =
+  createAction<CallbackPayload<any, any, LoginError>>("user/postUserAsync");
 
 function* postUser({
   payload: { payload, onSuccess = () => null, onError = () => null },
 }: CallbackAction<any, any, LoginError>) {
   try {
-    const res: AxiosResponse<any> = yield call(authRequests.updateUsers, payload);
+    const res: AxiosResponse<any> = yield call(
+      authRequests.updateUsers,
+      payload
+    );
 
     onSuccess(res.data);
   } catch (error) {
@@ -91,16 +112,22 @@ function* postUser({
   }
 }
 
-export const postDefaultAddressAsync =
-  createAction<CallbackPayload<AddressDefaultBody, CreateUpdateAddressResponse, LoginError>>(
-    "user/postDefaultAddressAsync"
-  );
+export const postDefaultAddressAsync = createAction<
+  CallbackPayload<AddressDefaultBody, CreateUpdateAddressResponse, LoginError>
+>("user/postDefaultAddressAsync");
 
 function* postDefaultAddress({
   payload: { payload, onSuccess = () => null, onError = () => null },
-}: CallbackAction<AddressDefaultBody, CreateUpdateAddressResponse, LoginError>) {
+}: CallbackAction<
+  AddressDefaultBody,
+  CreateUpdateAddressResponse,
+  LoginError
+>) {
   try {
-    const res: AxiosResponse<any> = yield call(authRequests.createDefaultAddress, payload);
+    const res: AxiosResponse<any> = yield call(
+      authRequests.createDefaultAddress,
+      payload
+    );
     console.log({ res });
     onSuccess(res.data);
   } catch (error) {
@@ -109,16 +136,22 @@ function* postDefaultAddress({
   }
 }
 
-export const putDefaultAddressAsync =
-  createAction<CallbackPayload<AddressDefaultBody, CreateUpdateAddressResponse, LoginError>>(
-    "user/putDefaultAddressAsync"
-  );
+export const putDefaultAddressAsync = createAction<
+  CallbackPayload<AddressDefaultBody, CreateUpdateAddressResponse, LoginError>
+>("user/putDefaultAddressAsync");
 
 function* putDefaultAddress({
   payload: { payload, onSuccess = () => null, onError = () => null },
-}: CallbackAction<AddressDefaultBody, CreateUpdateAddressResponse, LoginError>) {
+}: CallbackAction<
+  AddressDefaultBody,
+  CreateUpdateAddressResponse,
+  LoginError
+>) {
   try {
-    const res: AxiosResponse<any> = yield call(authRequests.updateDefaultAddress, payload);
+    const res: AxiosResponse<any> = yield call(
+      authRequests.updateDefaultAddress,
+      payload
+    );
     console.log({ res });
     onSuccess(res.data);
   } catch (error) {
@@ -127,14 +160,17 @@ function* putDefaultAddress({
   }
 }
 
-export const getUserInfoAsync =
-  createAction<CallbackPayload<undefined, GetUserInfoResponse, GetUserInfoError>>("user/getUserInfoAsync");
+export const getUserInfoAsync = createAction<
+  CallbackPayload<undefined, GetUserInfoResponse, GetUserInfoError>
+>("user/getUserInfoAsync");
 
 function* getUserInfo({
   payload: { onSuccess = () => null, onError = () => null },
 }: CallbackAction<undefined, GetUserInfoResponse, GetUserInfoError>) {
   try {
-    const res: AxiosResponse<GetUserInfoResponse> = yield call(userRequests.getUserInfo);
+    const res: AxiosResponse<GetUserInfoResponse> = yield call(
+      userRequests.getUserInfo
+    );
 
     yield put(userActions.setUserInfo(res.data));
     onSuccess(res.data);
@@ -144,43 +180,61 @@ function* getUserInfo({
   }
 }
 
-export const putUpdatePreferencesAsync =
-  createAction<CallbackPayload<any, any, putUpdatePreferencesError>>("user/UpdatePreferencesAsync");
+export const putUpdatePreferencesAsync = createAction<
+  CallbackPayload<any, any, putUpdatePreferencesError>
+>("user/UpdatePreferencesAsync");
 
 function* putUpdatePreferences({
   payload: { payload, onSuccess = () => null, onError = () => null },
 }: CallbackAction<any[], any, putUpdatePreferencesError>) {
   try {
-    const res: AxiosResponse<any> = yield call(authRequests.putUpdatePreferences, payload);
+    const res: AxiosResponse<any> = yield call(
+      authRequests.putUpdatePreferences,
+      payload
+    );
     onSuccess(res.data);
   } catch (error) {
     onError((error as AxiosError<any>)?.response?.data);
   }
 }
 
-export const getVerifyEmailAsync =
-  createAction<CallbackPayload<string, VerifyEmailResponse, VerifyEmailError>>("user/getVerifyEmailAsync");
+export const getVerifyEmailAsync = createAction<
+  CallbackPayload<string, VerifyEmailResponse, VerifyEmailError>
+>("user/getVerifyEmailAsync");
 
 function* getVerifyEmail({
-  payload: { payload, onSuccess = data => data, onError = () => null },
+  payload: { payload, onSuccess = (data) => data, onError = () => null },
 }: CallbackAction<string, VerifyEmailResponse, VerifyEmailError>) {
   try {
-    const res: AxiosResponse<VerifyEmailResponse> = yield call(authRequests.verifyToken, payload);
+    const res: AxiosResponse<VerifyEmailResponse> = yield call(
+      authRequests.verifyToken,
+      payload
+    );
     onSuccess(res.data);
   } catch (error) {
     onError((error as AxiosError<any>)?.response?.data);
   }
 }
 
-export const putUpdateUserBasicAsync =
-  createAction<CallbackPayload<UpdateUserBasicBody, UpdateUserBasicResponse, UpdateUserBasicError>>(
-    "user/putUpdateUserBasicAsync"
-  );
+export const putUpdateUserBasicAsync = createAction<
+  CallbackPayload<
+    UpdateUserBasicBody,
+    UpdateUserBasicResponse,
+    UpdateUserBasicError
+  >
+>("user/putUpdateUserBasicAsync");
 function* putUpdateUserBasic({
   payload: { payload, onSuccess = () => null, onError = () => null },
-}: CallbackAction<UpdateUserBasicBody, UpdateUserBasicResponse, UpdateUserBasicError>) {
+}: CallbackAction<
+  UpdateUserBasicBody,
+  UpdateUserBasicResponse,
+  UpdateUserBasicError
+>) {
   try {
-    const res: AxiosResponse<UpdateUserBasicResponse> = yield call(userRequests.updateUserBasic, payload);
+    const res: AxiosResponse<UpdateUserBasicResponse> = yield call(
+      userRequests.updateUserBasic,
+      payload
+    );
     onSuccess(res.data);
     yield put(userActions.setUserInfo(res.data));
     yield put(getUserInfoAsync({ payload: undefined }));
@@ -196,7 +250,9 @@ function* getUserLoyaltyPoint({
   payload: { onSuccess = () => null, onError = () => null },
 }: CallbackAction<null, GetLoyaltyPointResponse, GetLoyaltyPointError>) {
   try {
-    const res: AxiosResponse<GetLoyaltyPointResponse> = yield call(userRequests.getUserLoyaltyPoint);
+    const res: AxiosResponse<GetLoyaltyPointResponse> = yield call(
+      userRequests.getUserLoyaltyPoint
+    );
     yield put(userActions.setLoyaltyPoint(res.data));
     onSuccess(res.data);
   } catch (error) {
@@ -204,42 +260,57 @@ function* getUserLoyaltyPoint({
   }
 }
 
-export const postRateProductAsync =
-  createAction<CallbackPayload<OrderProductRating, any, ResponseError>>("user/postRateProductAsync");
+export const postRateProductAsync = createAction<
+  CallbackPayload<OrderProductRating, any, ResponseError>
+>("user/postRateProductAsync");
 
 function* postRateProduct({
   payload: { payload, onSuccess = () => null, onError = () => null },
 }: CallbackAction<OrderProductRating, any, ResponseError>) {
   try {
-    const res: AxiosResponse<any> = yield call(authRequests.postRateProduct, payload, payload.orderId);
+    const res: AxiosResponse<any> = yield call(
+      authRequests.postRateProduct,
+      payload,
+      payload.orderId
+    );
     onSuccess(res.data);
   } catch (error) {
     onError((error as AxiosError<any>)?.response?.data);
   }
 }
 
-export const postRateStoreAsync =
-  createAction<CallbackPayload<OrderStoreRating, any, ResponseError>>("user/postRateStoreAsync");
+export const postRateStoreAsync = createAction<
+  CallbackPayload<OrderStoreRating, any, ResponseError>
+>("user/postRateStoreAsync");
 
 function* postRateStore({
   payload: { payload, onSuccess = () => null, onError = () => null },
 }: CallbackAction<OrderStoreRating, any, ResponseError>) {
   try {
-    const res: AxiosResponse<any> = yield call(authRequests.postRateStore, payload, payload.orderId);
+    const res: AxiosResponse<any> = yield call(
+      authRequests.postRateStore,
+      payload,
+      payload.orderId
+    );
     onSuccess(res.data);
   } catch (error) {
     onError((error as AxiosError<any>)?.response?.data);
   }
 }
 
-export const postRefundRequestAsync =
-  createAction<CallbackPayload<RefundRequestBody, any, ResponseError>>("user/postRefundRequestAsync");
+export const postRefundRequestAsync = createAction<
+  CallbackPayload<RefundRequestBody, any, ResponseError>
+>("user/postRefundRequestAsync");
 
 function* postRefundRequest({
   payload: { payload, onSuccess = () => null, onError = () => null },
 }: CallbackAction<RefundRequestBody, any, ResponseError>) {
   try {
-    const res: AxiosResponse<any> = yield call(authRequests.postRefundRequest, payload, payload.orderId);
+    const res: AxiosResponse<any> = yield call(
+      authRequests.postRefundRequest,
+      payload,
+      payload.orderId
+    );
     onSuccess(res.data);
   } catch (error) {
     onError((error as AxiosError<any>)?.response?.data);
@@ -253,7 +324,9 @@ function* getMembershipAvatars({
   payload: { onSuccess = () => null, onError = () => null },
 }: CallbackAction<null, MembershipAvatarResponse, MembershipAvatarError>) {
   try {
-    const res: AxiosResponse<MembershipAvatarResponse> = yield call(userRequests.getMembershipAvatars);
+    const res: AxiosResponse<MembershipAvatarResponse> = yield call(
+      userRequests.getMembershipAvatars
+    );
     yield put(userActions.setMembershipAvatars(res.data));
     onSuccess(res.data);
   } catch (error) {
@@ -261,13 +334,16 @@ function* getMembershipAvatars({
   }
 }
 
-export const getUserMembershipsAsync =
-  createAction<CallbackPayload<null, UserMembershipResponse, UserMembershipError>>("user/getUserMembershipsAsync");
+export const getUserMembershipsAsync = createAction<
+  CallbackPayload<null, UserMembershipResponse, UserMembershipError>
+>("user/getUserMembershipsAsync");
 function* getUserMembership({
   payload: { onSuccess = () => null, onError = () => null },
 }: CallbackAction<null, UserMembershipResponse, UserMembershipError>) {
   try {
-    const res: AxiosResponse<UserMembershipResponse> = yield call(userRequests.getUserMembership);
+    const res: AxiosResponse<UserMembershipResponse> = yield call(
+      userRequests.getUserMembership
+    );
     yield put(userActions.setUserMembership(res.data));
     onSuccess(res.data);
   } catch (error) {

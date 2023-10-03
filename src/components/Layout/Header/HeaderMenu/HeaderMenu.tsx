@@ -21,7 +21,10 @@ const HeaderMenu: FC = () => {
     dispatch(systemActions.setDisplayAuthModal("login"));
   };
 
-  const cartLength = Object.values(carts).reduce((sum, item) => sum + item[0].product_items.length, 0);
+  const cartLength = Object.values(carts).reduce(
+    (sum, item) => sum + item[0].product_items.length,
+    0
+  );
 
   const getColor = (item: MenuItem) => {
     return router.pathname === item.link ? "#F4E85B" : "white";
@@ -36,18 +39,25 @@ const HeaderMenu: FC = () => {
           </MenuItem>
         ))}
 
-        {userInfo && (
-          <NotificationPopover userInfo={userInfo} />
-          )}
+        {userInfo && <NotificationPopover userInfo={userInfo} />}
 
         <IconButton href={routers.CART}>
-          {router.pathname === routers.CART ? <ShoppingCartIconActive /> : <ShoppingCartIcon />}
-          {!!cartLength && <CountNumber isMany={isManyNotification(cartLength)}>{formatNotifyNumber(cartLength)} </CountNumber>}
+          {router.pathname === routers.CART ? (
+            <ShoppingCartIconActive />
+          ) : (
+            <ShoppingCartIcon />
+          )}
+          {!!cartLength && (
+            <CountNumber isMany={isManyNotification(cartLength)}>
+              {formatNotifyNumber(cartLength)}{" "}
+            </CountNumber>
+          )}
         </IconButton>
         {userInfo ? (
-          <UserInfoPopover userInfo={userInfo}/>
+          <UserInfoPopover userInfo={userInfo} />
         ) : (
-          <LoginButton onClick={handlePopup}>Login or Signup</LoginButton>
+          // <LoginButton onClick={handlePopup}>Login or Signup</LoginButton>
+          <LoginButton onClick={handlePopup}>Connect wallet</LoginButton>
         )}
       </Menu>
     </>

@@ -236,3 +236,8 @@ declare interface ConfigExchange {
   lp_rate: number;
   sgd_rate: number;
 }
+
+declare interface UserAccount {
+  address: string;
+  balance: number | string;
+}

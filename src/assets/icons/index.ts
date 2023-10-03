@@ -104,3 +104,6 @@ export { default as GlobalIcon } from "./global-icon.svg";
 export { default as PlusCircleFillIcon } from "./plus-circle-fill.svg";
 export { default as FavouriteOutlineIcon } from "./favourite-outline-icon.svg";
 export { default as FavouriteFillIcon } from "./favourite-fill-icon.svg";
+
+export { default as MetamaskIcon } from "./metamask-icon.svg";
+export { default as WalletConnectIcon } from "./wallet-connect-icon.svg";
