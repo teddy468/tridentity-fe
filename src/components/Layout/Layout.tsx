@@ -17,12 +17,17 @@ import SystemLoader from "./SystemLoader/SystemLoader";
 import ToastContainer from "./ToastContainer/ToastContainer";
 import { Wrapper } from "./styles";
 import ClearCartWarning from "../Form/ClearCartWarning/ClearCartWarning";
+import { useWalletListener } from "@/web3/hooks/useWalletListener";
 
 const Layout: FC<{ children: ReactNode }> = ({ children }) => {
-  const { theme, onStoreChat, user, userInfo } = useSelector(({ user }: RootState) => user);
+  const { theme, onStoreChat, user, userInfo } = useSelector(
+    ({ user }: RootState) => user
+  );
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const ref = useRef<HTMLButtonElement | null>(null);
   const dispatch = useDispatch();
+
+  useWalletListener();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (!user) return dispatch(systemActions.setDisplayAuthModal("login"));

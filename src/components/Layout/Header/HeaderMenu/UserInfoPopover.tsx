@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import useAvatar from "@/commons/hooks/useAvatar";
 import { ellipseAddress } from "@/utils/dataHelper";
+import { useConnectWallet } from "@/commons/hooks/useConnectWallet";
 
 interface Props {
   userInfo: any;
@@ -23,6 +24,7 @@ const UserInfoPopover: React.FC<Props> = ({ userInfo }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { avatar } = useAvatar();
+  const { disconnectWallet } = useConnectWallet();
 
   const { address } = useSelector((state: RootState) => state.user);
 
@@ -44,6 +46,7 @@ const UserInfoPopover: React.FC<Props> = ({ userInfo }) => {
     await router.push(routers.HOME);
     dispatch(logoutAsync({ payload: null }));
     setAnchorEl(null);
+    disconnectWallet();
   };
 
   const open = Boolean(anchorEl);
@@ -55,7 +58,6 @@ const UserInfoPopover: React.FC<Props> = ({ userInfo }) => {
         <UserAvatarWrapper>
           <UserAvatar src={avatar} />
         </UserAvatarWrapper>
-        {/* {userInfo?.username} */}
         {ellipseAddress(address as string, 4, 4)}
         <ArrowDownIcon />
         <StyledPopover
