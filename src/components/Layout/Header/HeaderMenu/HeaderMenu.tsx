@@ -13,7 +13,7 @@ import { isManyNotification } from "@/utils/notificationHelper";
 
 const HeaderMenu: FC = () => {
   const dispatch = useDispatch();
-  const { userInfo } = useSelector((state: RootState) => state.user);
+  const { userInfo, address } = useSelector((state: RootState) => state.user);
   const { carts } = useSelector((state: RootState) => state.cart);
   const router = useRouter();
 
@@ -53,7 +53,7 @@ const HeaderMenu: FC = () => {
             </CountNumber>
           )}
         </IconButton>
-        {userInfo ? (
+        {address ? (
           <UserInfoPopover userInfo={userInfo} />
         ) : (
           // <LoginButton onClick={handlePopup}>Login or Signup</LoginButton>

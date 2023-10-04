@@ -17,3 +17,15 @@ export const getCurrency = (currency: string): string => {
       return "$";
   }
 };
+
+export const ellipseAddress = (
+  address = "",
+  maxCharacters = 5,
+  maxLastCharacters?: number | undefined
+): string => {
+  if (!address) return "";
+
+  return `${address.slice(0, maxCharacters)}...${address.slice(
+    -(maxLastCharacters ? maxLastCharacters : maxCharacters)
+  )}`;
+};

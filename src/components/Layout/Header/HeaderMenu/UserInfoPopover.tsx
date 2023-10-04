@@ -1,12 +1,19 @@
 import * as React from "react";
-import { PopoverItem, StyledPopover, UserAvatar, UserAvatarWrapper, UserButton } from "@/components/Layout/Header/HeaderMenu/styles";
+import {
+  PopoverItem,
+  StyledPopover,
+  UserAvatar,
+  UserAvatarWrapper,
+  UserButton,
+} from "@/components/Layout/Header/HeaderMenu/styles";
 import { ArrowDownIcon } from "@/assets/icons";
 import { routers } from "@/commons/constants/routers";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logoutAsync } from "@/redux/saga/userSagas";
 import { useRouter } from "next/router";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import useAvatar from "@/commons/hooks/useAvatar";
+import { ellipseAddress } from "@/utils/dataHelper";
 
 interface Props {
   userInfo: any;
@@ -16,6 +23,8 @@ const UserInfoPopover: React.FC<Props> = ({ userInfo }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { avatar } = useAvatar();
+
+  const { address } = useSelector((state: RootState) => state.user);
 
   const [anchorEl, setAnchorEl] = React.useState<HTMLDivElement | null>(null);
 
@@ -46,7 +55,8 @@ const UserInfoPopover: React.FC<Props> = ({ userInfo }) => {
         <UserAvatarWrapper>
           <UserAvatar src={avatar} />
         </UserAvatarWrapper>
-        {userInfo?.username}
+        {/* {userInfo?.username} */}
+        {ellipseAddress(address as string, 4, 4)}
         <ArrowDownIcon />
         <StyledPopover
           id={id}
@@ -63,8 +73,12 @@ const UserInfoPopover: React.FC<Props> = ({ userInfo }) => {
         >
           <ClickAwayListener onClickAway={handleClose}>
             <div>
-              <PopoverItem onClick={() => handleRedirect(routers.USER.PROFILE)}>My Profile</PopoverItem>
-              <PopoverItem onClick={handleLogout}>Logout</PopoverItem>
+              <PopoverItem onClick={() => handleRedirect(routers.USER.PROFILE)}>
+                Profile setting
+              </PopoverItem>
+              <PopoverItem onClick={handleLogout}>
+                Disconnect wallet
+              </PopoverItem>
             </div>
           </ClickAwayListener>
         </StyledPopover>
