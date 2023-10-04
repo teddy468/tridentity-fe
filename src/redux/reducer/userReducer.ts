@@ -12,6 +12,9 @@ interface UserState {
   newMessage: number;
   userMembership: UserMembership | null;
   membershipAvatars: MembershipAvatar[];
+  address: string | null;
+  balance: string | null;
+  isAuth: boolean;
 }
 
 const initialState: UserState = {
@@ -25,6 +28,9 @@ const initialState: UserState = {
   newMessage: 0,
   membershipAvatars: [],
   userMembership: null,
+  address: null,
+  balance: null,
+  isAuth: false,
 };
 
 const userSlice = createSlice({
@@ -74,11 +80,32 @@ const userSlice = createSlice({
         userMembership: action.payload,
       };
     },
+    setUserAddress(state, action: PayloadAction<string>) {
+      return {
+        ...state,
+        address: action.payload,
+      };
+    },
+    setUserBalance(state, action: PayloadAction<string>) {
+      return {
+        ...state,
+        balance: action.payload,
+      };
+    },
+    setIsAuth(state, action: PayloadAction<boolean>) {
+      return {
+        ...state,
+        isAuth: action.payload,
+      };
+    },
     logOut(state) {
       return {
         ...state,
         user: null,
         userInfo: null,
+        address: null,
+        balance: null,
+        isAuth: false,
       };
     },
   },

@@ -7,6 +7,7 @@ import { useConnectWallet } from "./useConnectWallet";
 import { WEB3_ERROR } from "@/types/walletConnect";
 import { ConnectorKey, connectors } from "@/web3/connectors";
 import { walletConnect } from "@/web3/connectors/walletConnect";
+import { userActions } from "@/redux/reducer/userReducer";
 
 export const useUserLoginWallet = () => {
   // const [login] = useLoginMutation();
@@ -31,7 +32,7 @@ export const useUserLoginWallet = () => {
 
   const resetStore = (accountSelected: string) => {
     // dispatch(setAccessToken(accessToken));
-    // dispatch(setCurrentAccount(accountSelected as string));
+    dispatch(userActions.setUserAddress(accountSelected as string));
   };
 
   const clearWalletConnect = () => {
@@ -53,7 +54,6 @@ export const useUserLoginWallet = () => {
       }
       const provider = new Web3Provider(connector?.provider);
       const accountSelected = await getAccountConnected(provider);
-      console.log("account: ", accountSelected);
       if (!accountSelected) {
         throw new Error("Account not found");
       }

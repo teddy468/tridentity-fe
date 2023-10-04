@@ -75,13 +75,9 @@ const LoginForm: React.FC = () => {
     try {
       if (connectorKey === ConnectorKey.metaMask) {
         await userLogin(ConnectorKey.metaMask);
-        // setUserLock(false);
-        // onLoginSuccess && onLoginSuccess();
       } else {
         dispatch(systemActions.setDisplayAuthModal(null));
-        console.log("choose wallet connect");
         await userLogin(ConnectorKey.walletConnect);
-        // setUserLock(false);
       }
       handleClose();
     } catch (error: any) {
