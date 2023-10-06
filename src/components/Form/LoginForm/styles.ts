@@ -161,6 +161,7 @@ export const ConnetWalletWrapper = styled("div")(() => ({
   flexDirection: "row",
   justifyContent: "space-between",
   width: "100%",
+  marginBottom: 40,
 }));
 
 export const MetamaskLogo = styled(MetamaskIcon)(() => ({
@@ -255,6 +256,7 @@ export const TextGradient = styled("div")(() => ({
 export const TextSignup = styled("div")(() => ({
   display: "flex",
   justifyContent: "center",
+  marginBottom: 10,
 
   ".pointer": {
     cursor: "pointer",

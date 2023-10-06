@@ -1,43 +1,24 @@
-import {
-  GlobalIcon,
-  MetamaskIcon,
-  TriAppIcon,
-  WalletConnectIcon,
-} from "@/assets/icons";
-import { REDIRECT_TRI_APP } from "@/commons/constants/routers";
 import useLoading from "@/commons/hooks/useLoading";
+import { useUserLoginWallet } from "@/commons/hooks/useUserLoginWallet";
 import { CloseButton } from "@/components/commons/CloseButton/CloseButton";
 import { systemActions } from "@/redux/reducer/systemReducer";
-import { Typography } from "@mui/material";
+import { WEB3_ERROR } from "@/types/walletConnect";
+import { ConnectorKey } from "@/web3/connectors";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import EmailSection from "./EmailSection";
+import WalletSection from "./WalletSection";
 import {
-  ConnetWalletWrapper,
   Container,
-  GradientText,
-  GuestBrowse,
-  GuestBrowseIconWrapper,
-  GuestBrowseTextWrapper,
-  LoginDivider,
   LoginMethodWrapper,
   LogoLink,
-  MetamaskLogo,
-  SignUpHelper,
-  SignUpLink,
-  SignUpWithTriApp,
   StyledLogo,
   StyledModal,
   TabItem,
   TabWrapper,
   TextGradient,
   TextSignup,
-  WalletConnetLogo,
 } from "./styles";
-import ConnectBox from "@/components/ConnectWallet/ConnectBox";
-import { ConnectorKey } from "@/web3/connectors";
-import { useUserLoginWallet } from "@/commons/hooks/useUserLoginWallet";
-import { WEB3_ERROR } from "@/types/walletConnect";
-import EmailSection from "./EmailSection";
 
 const LoginForm: React.FC = () => {
   const dispatch = useDispatch();
@@ -134,7 +115,17 @@ const LoginForm: React.FC = () => {
               </Typography>
             </GuestBrowseTextWrapper>
           </GuestBrowse> */}
-          <EmailSection />
+
+          {!isConnectWallet ? (
+            <EmailSection />
+          ) : (
+            <WalletSection
+              handleConnectMetamask={() => handleClick(ConnectorKey.metaMask)}
+              handleWalletConnect={() =>
+                handleClick(ConnectorKey.walletConnect)
+              }
+            />
+          )}
           <TextSignup>
             You don’t have account,&nbsp;
             <TextGradient className="pointer">Sign up here</TextGradient>

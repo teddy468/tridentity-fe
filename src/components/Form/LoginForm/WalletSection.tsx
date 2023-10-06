@@ -1,10 +1,9 @@
 import ConnectBox from "@/components/ConnectWallet/ConnectBox";
 import { ConnetWalletWrapper, MetamaskLogo, WalletConnetLogo } from "./styles";
-import { ConnectorKey } from "@/web3/connectors";
 
 interface IWalletSectionProps {
-  handleConnectMetamask: (onnectorKey: ConnectorKey) => void;
-  handleWalletConnect: (onnectorKey: ConnectorKey) => void;
+  handleConnectMetamask?: () => void;
+  handleWalletConnect?: () => void;
 }
 
 const WalletSection: React.FC<IWalletSectionProps> = (
@@ -17,7 +16,7 @@ const WalletSection: React.FC<IWalletSectionProps> = (
       <ConnectBox
         icon={<MetamaskLogo />}
         onClick={() => {
-          handleConnectMetamask && handleConnectMetamask(ConnectorKey.metaMask);
+          handleConnectMetamask && handleConnectMetamask();
         }}
         text="Metamask"
         isActive={true}
@@ -25,8 +24,7 @@ const WalletSection: React.FC<IWalletSectionProps> = (
       <ConnectBox
         icon={<WalletConnetLogo />}
         onClick={() => {
-          handleWalletConnect &&
-            handleWalletConnect(ConnectorKey.walletConnect);
+          handleWalletConnect && handleWalletConnect();
         }}
         text="Wallet connect"
         isActive={true}
