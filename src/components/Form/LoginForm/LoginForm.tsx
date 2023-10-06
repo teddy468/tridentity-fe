@@ -27,19 +27,26 @@ import {
   SignUpWithTriApp,
   StyledLogo,
   StyledModal,
+  TabItem,
+  TabWrapper,
+  TextGradient,
+  TextSignup,
   WalletConnetLogo,
 } from "./styles";
 import ConnectBox from "@/components/ConnectWallet/ConnectBox";
 import { ConnectorKey } from "@/web3/connectors";
 import { useUserLoginWallet } from "@/commons/hooks/useUserLoginWallet";
 import { WEB3_ERROR } from "@/types/walletConnect";
+import EmailSection from "./EmailSection";
 
 const LoginForm: React.FC = () => {
   const dispatch = useDispatch();
   const { authModal } = useSelector(({ system }: RootState) => system);
   const loadSC = useLoading();
   const { userLogin } = useUserLoginWallet();
+
   const [isMetamask, setIsMetamask] = useState<boolean>(true);
+  const [isConnectWallet, setIsConnectWallet] = useState<boolean>(false);
 
   const handleClose = () => {
     dispatch(systemActions.setDisplayAuthModal(null));
@@ -109,25 +116,8 @@ const LoginForm: React.FC = () => {
               <GradientText>Sign up here</GradientText>
             </SignUpLink>
           </SignUpHelper> */}
-          <ConnetWalletWrapper>
-            <ConnectBox
-              icon={<MetamaskLogo />}
-              onClick={() => {
-                handleClick(ConnectorKey.metaMask);
-              }}
-              text="Metamask"
-              isActive={true}
-            />
-            <ConnectBox
-              icon={<WalletConnetLogo />}
-              onClick={() => {
-                handleClick(ConnectorKey.walletConnect);
-              }}
-              text="Wallet connect"
-              isActive={true}
-            />
-          </ConnetWalletWrapper>
-          <LoginDivider>Or</LoginDivider>
+
+          {/* <LoginDivider>Or</LoginDivider>
           <GuestBrowse onClick={handleClose}>
             <GuestBrowseIconWrapper>
               <GlobalIcon />
@@ -143,7 +133,26 @@ const LoginForm: React.FC = () => {
                 Guest
               </Typography>
             </GuestBrowseTextWrapper>
-          </GuestBrowse>
+          </GuestBrowse> */}
+          <EmailSection />
+          <TextSignup>
+            You don’t have account,&nbsp;
+            <TextGradient className="pointer">Sign up here</TextGradient>
+          </TextSignup>
+          <TabWrapper>
+            <TabItem
+              className={`${!isConnectWallet ? "active" : ""}`}
+              onClick={() => setIsConnectWallet(false)}
+            >
+              Email
+            </TabItem>
+            <TabItem
+              className={`${isConnectWallet ? "active" : ""}`}
+              onClick={() => setIsConnectWallet(true)}
+            >
+              Connect Wallet
+            </TabItem>
+          </TabWrapper>
         </LoginMethodWrapper>
       </Container>
     </StyledModal>
