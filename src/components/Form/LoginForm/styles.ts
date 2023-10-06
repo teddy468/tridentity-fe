@@ -1,7 +1,9 @@
 import {
+  CheckboxAgreeIcon,
   GoogleGradientIcon,
   MetamaskIcon,
   TriFoodLogo,
+  UncheckboxAgreeIcon,
   WalletConnectIcon,
 } from "@/assets/icons";
 import { Box, Button, Divider, Modal, TextField, styled } from "@mui/material";
@@ -183,7 +185,7 @@ export const LoginEmailWrapper = styled("div")(() => ({
 }));
 
 export const LoginHeaderTilte = styled("div")(() => ({
-  color: "#ffffff",
+  color: "#FFFFFF",
   fontSize: "32px",
   fontStyle: "normal",
   fontWeight: 600,
@@ -241,6 +243,7 @@ export const LoginButton = styled(Button)(() => ({
   fontWeight: 500,
   lineHeight: "20px",
   color: "#0B0B0C",
+  textTransform: "capitalize",
 }));
 
 export const ContinueWithGGButton = styled(SignUpWithTriApp)(() => ({}));
@@ -324,5 +327,42 @@ export const TabItem = styled("div")(() => ({
   fontStyle: "normal",
   fontWeight: "500",
   lineHeight: "20px",
+  cursor: "pointer",
+}));
+
+export const SignupWrapper = styled("div")(() => ({
+  ".mb-30": {
+    marginBottom: 30,
+  },
+
+  ".mb-16": {
+    marginBottom: 16,
+  },
+
+  ".text-change-wallet": {
+    textAlign: "center",
+    marginTop: 40,
+    cursor: "pointer",
+  },
+}));
+
+export const TextAgree = styled("div")(() => ({
+  display: "flex",
+  alignItems: "center",
+  fontSize: "14px",
+  fontStyle: "normal",
+  fontWeight: 500,
+  lineHeight: "20px",
+  color: "#FFFFFF",
+  marginBottom: 32,
+}));
+
+export const CheckboxAgreeLogo = styled(CheckboxAgreeIcon)(() => ({
+  marginRight: 10,
+  cursor: "pointer",
+}));
+
+export const UncheckboxAgreeLogo = styled(UncheckboxAgreeIcon)(() => ({
+  marginRight: 10,
   cursor: "pointer",
 }));

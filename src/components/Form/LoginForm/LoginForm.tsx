@@ -19,6 +19,7 @@ import {
   TextGradient,
   TextSignup,
 } from "./styles";
+import SignupSection from "./SignupSection";
 
 const LoginForm: React.FC = () => {
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ const LoginForm: React.FC = () => {
 
   const [isMetamask, setIsMetamask] = useState<boolean>(true);
   const [isConnectWallet, setIsConnectWallet] = useState<boolean>(false);
+  const [isSignup, setIsSignup] = useState<boolean>(false);
 
   const handleClose = () => {
     dispatch(systemActions.setDisplayAuthModal(null));
@@ -116,34 +118,54 @@ const LoginForm: React.FC = () => {
             </GuestBrowseTextWrapper>
           </GuestBrowse> */}
 
-          {!isConnectWallet ? (
-            <EmailSection />
+          {!isSignup ? (
+            !isConnectWallet ? (
+              <EmailSection />
+            ) : (
+              <WalletSection
+                handleConnectMetamask={() => handleClick(ConnectorKey.metaMask)}
+                handleWalletConnect={() =>
+                  handleClick(ConnectorKey.walletConnect)
+                }
+              />
+            )
           ) : (
-            <WalletSection
-              handleConnectMetamask={() => handleClick(ConnectorKey.metaMask)}
-              handleWalletConnect={() =>
-                handleClick(ConnectorKey.walletConnect)
-              }
-            />
+            <></>
           )}
-          <TextSignup>
-            You don’t have account,&nbsp;
-            <TextGradient className="pointer">Sign up here</TextGradient>
-          </TextSignup>
-          <TabWrapper>
-            <TabItem
-              className={`${!isConnectWallet ? "active" : ""}`}
-              onClick={() => setIsConnectWallet(false)}
-            >
-              Email
-            </TabItem>
-            <TabItem
-              className={`${isConnectWallet ? "active" : ""}`}
-              onClick={() => setIsConnectWallet(true)}
-            >
-              Connect Wallet
-            </TabItem>
-          </TabWrapper>
+
+          {!isSignup && (
+            <>
+              <TextSignup>
+                You don’t have account,&nbsp;
+                <TextGradient
+                  className="pointer"
+                  onClick={() => setIsSignup(true)}
+                >
+                  Sign up here
+                </TextGradient>
+              </TextSignup>
+              <TabWrapper>
+                <TabItem
+                  className={`${!isConnectWallet ? "active" : ""}`}
+                  onClick={() => setIsConnectWallet(false)}
+                >
+                  Email
+                </TabItem>
+                <TabItem
+                  className={`${isConnectWallet ? "active" : ""}`}
+                  onClick={() => setIsConnectWallet(true)}
+                >
+                  Connect Wallet
+                </TabItem>
+              </TabWrapper>
+            </>
+          )}
+
+          {isSignup ? (
+            <SignupSection onClickChangeWallet={() => setIsSignup(false)} />
+          ) : (
+            <></>
+          )}
         </LoginMethodWrapper>
       </Container>
     </StyledModal>
