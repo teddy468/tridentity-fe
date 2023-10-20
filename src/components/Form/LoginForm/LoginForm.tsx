@@ -1,12 +1,13 @@
-import useLoading from "@/commons/hooks/useLoading";
+import { TOKEN_KEY } from "@/commons/constants";
+import useAuth from "@/commons/hooks/useAuth";
+import useToast from "@/commons/hooks/useToast";
 import { useUserLoginWallet } from "@/commons/hooks/useUserLoginWallet";
-import { CloseButton } from "@/components/commons/CloseButton/CloseButton";
 import { systemActions } from "@/redux/reducer/systemReducer";
-import { WEB3_ERROR } from "@/types/walletConnect";
 import { ConnectorKey } from "@/web3/connectors";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import EmailSection from "./EmailSection";
+import SignupSection from "./SignupSection";
 import WalletSection from "./WalletSection";
 import {
   Container,
@@ -19,108 +20,153 @@ import {
   TextGradient,
   TextSignup,
 } from "./styles";
-import SignupSection from "./SignupSection";
 
 const LoginForm: React.FC = () => {
   const dispatch = useDispatch();
   const { authModal } = useSelector(({ system }: RootState) => system);
-  const loadSC = useLoading();
+  const { address, signature } = useSelector((state: RootState) => state.user);
   const { userLogin } = useUserLoginWallet();
+  const { login, loginMetamask, signup, linkAddress, checkMappingAddress } =
+    useAuth();
+  const toast = useToast();
 
-  const [isMetamask, setIsMetamask] = useState<boolean>(true);
   const [isConnectWallet, setIsConnectWallet] = useState<boolean>(false);
   const [isSignup, setIsSignup] = useState<boolean>(false);
+  // const [isLoginByEmail, setIsLoginByEmail] = useState<boolean>(false);
+
+  const [emailLogin, setEmailLogin] = useState<string>("");
+  const [passwordLogin, setPasswordLogin] = useState<string>("");
+
+  const [emailSignup, setEmailSignup] = useState<string>("");
+  const [usernameSignup, setUsernameSignup] = useState<string>("");
+  const [passwordSignup, setPasswordSignup] = useState<string>("");
+  const [reEnterPasswordSignup, setReEnterPasswordSignup] =
+    useState<string>("");
 
   const handleClose = () => {
     dispatch(systemActions.setDisplayAuthModal(null));
-    // setIsMetamask(true);
-  };
-
-  // Need refactor later
-  const triAppRedirect = async (e: any, url: string) => {
-    loadSC.show();
-
-    location.replace(url);
-
-    loadSC.hide();
-  };
-
-  const handleError = (error: WEB3_ERROR, connectorKey: ConnectorKey) => {
-    // switch (error.type) {
-    //   case 'user_reject':
-    //     handleUserReject(error);
-    //     break;
-    //   case 'un_support_chain':
-    //     toastMessage.error(t(MESSAGES.MC14), t(MESSAGES.MC15));
-    //     break;
-    //   case 'no_eth_provider':
-    //     setIsMetamask(false);
-    //     break;
-    //   default:
-    //     toastMessage.error(MESSAGES.MC3);
-    // }
   };
 
   const handleClick = async (connectorKey: ConnectorKey) => {
     try {
+      let res = null;
+
       if (connectorKey === ConnectorKey.metaMask) {
-        await userLogin(ConnectorKey.metaMask);
+        res = await userLogin(ConnectorKey.metaMask);
       } else {
         dispatch(systemActions.setDisplayAuthModal(null));
-        await userLogin(ConnectorKey.walletConnect);
+        res = await userLogin(ConnectorKey.walletConnect);
       }
+
+      if (res?.accountSelected && res?.signature) {
+        await loginMetamask(res?.accountSelected, res?.signature);
+        handleClose();
+      }
+    } catch (error: any) {}
+  };
+
+  const onChangeEmailLogin = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setEmailLogin(e.target.value);
+    },
+    []
+  );
+
+  const onChangePasswordLogin = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setPasswordLogin(e.target.value);
+    },
+    []
+  );
+
+  const handleLogin = async () => {
+    try {
+      if (!address) {
+        toast.warning("Wait for connecting wallet");
+        await userLogin(ConnectorKey.metaMask);
+      }
+
+      const res = await login(emailLogin, passwordLogin);
+
+      const userAddress = checkMappingAddress(
+        res.data.data.access_token as string
+      );
+
+      if (!userAddress && address) {
+        if (signature) {
+          await linkAddress(address, signature);
+        }
+      }
+
+      if (userAddress && userAddress !== address) {
+        toast.warning("Please change wallet");
+        return;
+      }
+
+      localStorage.setItem(TOKEN_KEY, res.data.data.access_token);
+
       handleClose();
     } catch (error: any) {
-      // handleError(
-      //   error,
-      //   isMetamask ? ConnectorKey.metaMask : ConnectorKey.walletConnect
-      // );
+      toast.error(error.response.data.message);
     }
+  };
+
+  const onChangeEmailSignup = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setEmailSignup(e.target.value);
+    },
+    []
+  );
+
+  const onChangeUsernameSignup = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setUsernameSignup(e.target.value);
+    },
+    []
+  );
+
+  const onChangePasswordSignup = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setPasswordSignup(e.target.value);
+    },
+    []
+  );
+
+  const onChangeReEnterPassword = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setReEnterPasswordSignup(e.target.value);
+    },
+    []
+  );
+
+  const handleSignup = async () => {
+    try {
+      if (passwordSignup !== reEnterPasswordSignup) {
+        toast.error("Re enter password");
+        return;
+      }
+
+      await signup(emailSignup, usernameSignup, passwordSignup);
+      toast.success("Sign up success. Please check mail to active account");
+    } catch (error) {}
   };
 
   return (
     <StyledModal open={authModal === "login"} onClose={handleClose}>
       <Container>
-        <CloseButton onClick={handleClose} />
         <LogoLink href="/">
           <StyledLogo />
         </LogoLink>
         <LoginMethodWrapper>
-          {/* Link to app to redirect or login on Tridentity website */}
-          {/* <SignUpWithTriApp
-            onClick={(e) => triAppRedirect(e, REDIRECT_TRI_APP.LOGIN_URL)}
-          >
-            <TriAppIcon />
-            <GradientText>Login with Tridentity App</GradientText>
-          </SignUpWithTriApp> */}
-          {/* <SignUpHelper>
-            You don’t have account?
-            <SignUpLink href={REDIRECT_TRI_APP.REGISTER_URL}>
-              <GradientText>Sign up here</GradientText>
-            </SignUpLink>
-          </SignUpHelper> */}
-
-          {/* <LoginDivider>Or</LoginDivider>
-          <GuestBrowse onClick={handleClose}>
-            <GuestBrowseIconWrapper>
-              <GlobalIcon />
-            </GuestBrowseIconWrapper>
-            <GuestBrowseTextWrapper>
-              Browse as{" "}
-              <Typography
-                variant="caption"
-                variantMapping={{ caption: "span" }}
-                fontWeight={500}
-                fontSize={14}
-              >
-                Guest
-              </Typography>
-            </GuestBrowseTextWrapper>
-          </GuestBrowse> */}
-
           {!isSignup ? (
             !isConnectWallet ? (
-              <EmailSection />
+              <EmailSection
+                email={emailLogin}
+                password={passwordLogin}
+                onChangeEmail={onChangeEmailLogin}
+                onChangePassword={onChangePasswordLogin}
+                onClickLogin={handleLogin}
+              />
             ) : (
               <WalletSection
                 handleConnectMetamask={() => handleClick(ConnectorKey.metaMask)}
@@ -162,7 +208,18 @@ const LoginForm: React.FC = () => {
           )}
 
           {isSignup ? (
-            <SignupSection onClickChangeWallet={() => setIsSignup(false)} />
+            <SignupSection
+              email={emailSignup}
+              username={usernameSignup}
+              password={passwordSignup}
+              reEnterPassword={reEnterPasswordSignup}
+              onChangeEmail={onChangeEmailSignup}
+              onChangeUsername={onChangeUsernameSignup}
+              onChangePassord={onChangePasswordSignup}
+              onChangeReEnterPassord={onChangeReEnterPassword}
+              onClickSignup={handleSignup}
+              onClickChangeWallet={() => setIsSignup(false)}
+            />
           ) : (
             <></>
           )}

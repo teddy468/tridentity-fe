@@ -8,6 +8,9 @@ import { WEB3_ERROR } from "@/types/walletConnect";
 import { ConnectorKey, connectors } from "@/web3/connectors";
 import { walletConnect } from "@/web3/connectors/walletConnect";
 import { userActions } from "@/redux/reducer/userReducer";
+import { NEXT_PUBLIC_MESSAGES_SIGN } from "@/web3/constants/envs";
+import { signMessage } from "@/web3/helpers";
+import moment from "moment";
 
 export const useUserLoginWallet = () => {
   // const [login] = useLoginMutation();
@@ -20,15 +23,20 @@ export const useUserLoginWallet = () => {
     return account;
   };
 
-  // const getSignature = async (accountSelected: string, provider: Web3Provider) => {
-  //   const message = `${REACT_APP_MESSAGES_SIGN} ${accountSelected}@${durationActive}`;
-  //   const signer = provider?.getSigner();
-  //   const signature = await signMessage(signer, message);
-  //   return {
-  //     message,
-  //     signature,
-  //   };
-  // };
+  const getSignature = async (
+    accountSelected: string,
+    provider: Web3Provider
+  ) => {
+    const durationActive = moment().add(1, "h").unix();
+    // const message = `${NEXT_PUBLIC_MESSAGES_SIGN} ${accountSelected}@${durationActive}`;
+    const message = NEXT_PUBLIC_MESSAGES_SIGN as string;
+    const signer = provider?.getSigner();
+    const signature = await signMessage(signer, message);
+    return {
+      message,
+      signature,
+    };
+  };
 
   const resetStore = (accountSelected: string) => {
     // dispatch(setAccessToken(accessToken));
@@ -57,17 +65,23 @@ export const useUserLoginWallet = () => {
       if (!accountSelected) {
         throw new Error("Account not found");
       }
-      // const { signature, message } = await getSignature(accountSelected, provider);
-      // const res: any = await login({ message, signature });
-      // const accessToken = res?.data?.access_token;
 
+      const { signature, message } = await getSignature(
+        accountSelected,
+        provider
+      );
+
+      dispatch(userActions.setSignature(signature as string));
       resetStore(accountSelected);
-      // dispatch(setIsAuth(true));
+
+      return {
+        accountSelected,
+        signature,
+      };
     } catch (error: any) {
       if (connectorKey === ConnectorKey.walletConnect) {
         clearWalletConnect();
       }
-      console.log("Errorrrr: ", error);
       if (error?.code === AxiosError.ERR_NETWORK) {
         return;
       }
@@ -81,5 +95,5 @@ export const useUserLoginWallet = () => {
     }
   };
 
-  return { userLogin };
+  return { userLogin, getSignature };
 };

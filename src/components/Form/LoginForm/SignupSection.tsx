@@ -19,13 +19,33 @@ import {
 } from "./styles";
 
 interface ISignupSectionProps {
+  email: string;
+  username: string;
+  password: string;
+  reEnterPassword: string;
+  onChangeEmail: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeUsername: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangePassord: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeReEnterPassord: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onClickSignup: () => void;
   onClickChangeWallet: () => void;
 }
 
 const SignupSection: React.FC<ISignupSectionProps> = (
   props: ISignupSectionProps
 ) => {
-  const { onClickChangeWallet } = props;
+  const {
+    email,
+    username,
+    password,
+    reEnterPassword,
+    onChangeEmail,
+    onChangeUsername,
+    onChangePassord,
+    onChangeReEnterPassord,
+    onClickSignup,
+    onClickChangeWallet,
+  } = props;
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showPasswordReEnter, setShowPasswordReEnter] =
@@ -53,7 +73,7 @@ const SignupSection: React.FC<ISignupSectionProps> = (
     <SignupWrapper>
       <LoginHeaderTilte>Sign up</LoginHeaderTilte>
       <LoginTextField
-        id="email-username"
+        id="email"
         className="mb-30"
         placeholder="Email"
         InputProps={{
@@ -63,9 +83,11 @@ const SignupSection: React.FC<ISignupSectionProps> = (
             </InputAdornment>
           ),
         }}
+        value={email}
+        onChange={onChangeEmail}
       />
       <LoginTextField
-        id="email-username"
+        id="username"
         className="mb-30"
         placeholder="Username"
         InputProps={{
@@ -75,6 +97,8 @@ const SignupSection: React.FC<ISignupSectionProps> = (
             </InputAdornment>
           ),
         }}
+        value={username}
+        onChange={onChangeUsername}
       />
       <PasswordField
         id="password"
@@ -99,6 +123,8 @@ const SignupSection: React.FC<ISignupSectionProps> = (
             </InputAdornment>
           ),
         }}
+        value={password}
+        onChange={onChangePassord}
       />
       <PasswordField
         id="password"
@@ -123,6 +149,8 @@ const SignupSection: React.FC<ISignupSectionProps> = (
             </InputAdornment>
           ),
         }}
+        value={reEnterPassword}
+        onChange={onChangeReEnterPassord}
       />
       <TextAgree>
         {isAgree ? (
@@ -130,9 +158,9 @@ const SignupSection: React.FC<ISignupSectionProps> = (
         ) : (
           <UncheckboxAgreeLogo onClick={() => setIsAgree(true)} />
         )}
-        I agree to the <b>Terms and Conditions of Tridentity</b>
+        I agree to the&nbsp;<b>Terms and Conditions of Tridentity</b>
       </TextAgree>
-      <LoginButton>Sign up</LoginButton>
+      <LoginButton onClick={onClickSignup}>Sign up</LoginButton>
       <TextGradient
         className="text-change-wallet"
         onClick={onClickChangeWallet}

@@ -18,11 +18,20 @@ import {
   TextGradient,
 } from "./styles";
 
-interface IEmailSectionProps {}
+interface IEmailSectionProps {
+  email: string;
+  password: string;
+  onChangeEmail: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangePassword: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onClickLogin: () => void;
+}
 
 const EmailSection: React.FC<IEmailSectionProps> = (
   props: IEmailSectionProps
 ) => {
+  const { email, password, onChangeEmail, onChangePassword, onClickLogin } =
+    props;
+
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const handleClickShowPassword = () => setShowPassword((state) => !state);
@@ -47,6 +56,8 @@ const EmailSection: React.FC<IEmailSectionProps> = (
             </InputAdornment>
           ),
         }}
+        value={email}
+        onChange={onChangeEmail}
       />
       <PasswordField
         id="password"
@@ -70,9 +81,11 @@ const EmailSection: React.FC<IEmailSectionProps> = (
             </InputAdornment>
           ),
         }}
+        value={password}
+        onChange={onChangePassword}
       />
       <ForgotPasswordText>Forgot password?</ForgotPasswordText>
-      <LoginButton>Login</LoginButton>
+      <LoginButton onClick={onClickLogin}>Login</LoginButton>
       <LoginDivider>Or</LoginDivider>
       <ContinueWithGGButton>
         <GoogleGradientLogo />

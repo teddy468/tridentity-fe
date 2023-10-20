@@ -15,6 +15,7 @@ interface UserState {
   address: string | null;
   balance: string | null;
   isAuth: boolean;
+  signature: string | null;
 }
 
 const initialState: UserState = {
@@ -31,6 +32,7 @@ const initialState: UserState = {
   address: null,
   balance: null,
   isAuth: false,
+  signature: null,
 };
 
 const userSlice = createSlice({
@@ -98,6 +100,12 @@ const userSlice = createSlice({
         isAuth: action.payload,
       };
     },
+    setSignature(state, action: PayloadAction<string>) {
+      return {
+        ...state,
+        signature: action.payload,
+      };
+    },
     logOut(state) {
       return {
         ...state,
@@ -106,6 +114,7 @@ const userSlice = createSlice({
         address: null,
         balance: null,
         isAuth: false,
+        signature: null,
       };
     },
   },
