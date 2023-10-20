@@ -10,12 +10,15 @@ import UserInfoPopover from "@/components/Layout/Header/HeaderMenu/UserInfoPopov
 import NotificationPopover from "@/components/Layout/Header/HeaderMenu/NotificationPopover";
 import { formatNotifyNumber } from "@/commons/utils/formatNumber";
 import { isManyNotification } from "@/utils/notificationHelper";
+import useListenAuth from "@/commons/hooks/useListenAuth";
 
 const HeaderMenu: FC = () => {
   const dispatch = useDispatch();
   const { userInfo, address } = useSelector((state: RootState) => state.user);
   const { carts } = useSelector((state: RootState) => state.cart);
   const router = useRouter();
+
+  useListenAuth();
 
   const handlePopup = () => {
     dispatch(systemActions.setDisplayAuthModal("login"));

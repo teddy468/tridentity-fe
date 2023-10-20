@@ -107,3 +107,11 @@ export { default as FavouriteFillIcon } from "./favourite-fill-icon.svg";
 
 export { default as MetamaskIcon } from "./metamask-icon.svg";
 export { default as WalletConnectIcon } from "./wallet-connect-icon.svg";
+
+export { default as UsernameLoginIcon } from "./username-login-icon.svg";
+export { default as PasswordLoginIcon } from "./password-login-icon.svg";
+export { default as HidePasswordIcon } from "./hide-password-icon.svg";
+export { default as GoogleGradientIcon } from "./google-icon.svg";
+export { default as EmailSignupIcon } from "./email-signup-icon.svg";
+export { default as CheckboxAgreeIcon } from "./checkbox-agree.svg";
+export { default as UncheckboxAgreeIcon } from "./uncheckbox-agree.svg";

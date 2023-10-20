@@ -1,14 +1,12 @@
 import {
-  EyeIcon,
-  EyeSlashIcon,
-  GoogleIcon,
-  LockIcon,
+  CheckboxAgreeIcon,
+  GoogleGradientIcon,
   MetamaskIcon,
-  ProfileIcon,
   TriFoodLogo,
+  UncheckboxAgreeIcon,
   WalletConnectIcon,
 } from "@/assets/icons";
-import { Box, Button, Divider, Modal, styled, Theme } from "@mui/material";
+import { Box, Button, Divider, Modal, TextField, styled } from "@mui/material";
 import Link from "next/link";
 
 export const StyledModal = styled(Modal)(() => ({
@@ -165,6 +163,7 @@ export const ConnetWalletWrapper = styled("div")(() => ({
   flexDirection: "row",
   justifyContent: "space-between",
   width: "100%",
+  marginBottom: 40,
 }));
 
 export const MetamaskLogo = styled(MetamaskIcon)(() => ({
@@ -175,4 +174,195 @@ export const MetamaskLogo = styled(MetamaskIcon)(() => ({
 export const WalletConnetLogo = styled(WalletConnectIcon)(() => ({
   width: 50,
   height: 50,
+}));
+
+export const LoginEmailWrapper = styled("div")(() => ({
+  width: "100%",
+
+  ".mb-38": {
+    marginBottom: 38,
+  },
+}));
+
+export const LoginHeaderTilte = styled("div")(() => ({
+  color: "#FFFFFF",
+  fontSize: "32px",
+  fontStyle: "normal",
+  fontWeight: 600,
+  lineHeight: "40px",
+  marginBottom: 16,
+}));
+
+export const LoginTextField = styled(TextField)(() => ({
+  width: "100%",
+
+  "& .MuiInputBase-input": {
+    color: "#DBDBDE",
+
+    "&::placeholder": {
+      color: "#DBDBDE",
+      opacity: 1,
+    },
+  },
+
+  "& .MuiOutlinedInput-root": {
+    border: "1px solid #7B7B84",
+    borderRadius: "8px",
+
+    "&.Mui-focused fieldset": {
+      border: "none",
+    },
+  },
+}));
+
+export const PasswordField = styled(LoginTextField)(() => ({}));
+
+export const ForgotPasswordText = styled("div")(() => ({
+  textAlign: "right",
+  marginTop: 6,
+  fontSize: "12px",
+  fontStyle: "normal",
+  fontWeight: 500,
+  lineHeight: "16px",
+  color: "#E3F1EC",
+  cursor: "pointer",
+  marginBottom: 36,
+}));
+
+export const LoginButton = styled(Button)(() => ({
+  background: "linear-gradient(to right bottom, #FDCD9D, #F7EF82)",
+  display: "flex",
+  padding: "12px 24px",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "10px",
+  borderRadius: 24,
+  width: "100%",
+  fontSize: "14px",
+  fontStyle: "normal",
+  fontWeight: 500,
+  lineHeight: "20px",
+  color: "#0B0B0C",
+  textTransform: "capitalize",
+}));
+
+export const ContinueWithGGButton = styled(SignUpWithTriApp)(() => ({}));
+
+export const GoogleGradientLogo = styled(GoogleGradientIcon)(() => ({}));
+
+export const TextGradient = styled("div")(() => ({
+  background: "linear-gradient(to right bottom, #FDCD9D, #F7EF82)",
+  WebkitBackgroundClip: "text",
+  WebkitTextFillColor: "transparent",
+}));
+
+export const TextSignup = styled("div")(() => ({
+  display: "flex",
+  justifyContent: "center",
+  marginBottom: 10,
+
+  ".pointer": {
+    cursor: "pointer",
+  },
+}));
+
+export const TabWrapper = styled("div")(() => ({
+  display: "flex",
+  justifyContent: "space-between",
+  padding: 4,
+  borderTopLeftRadius: "9999px",
+  borderTopRightRadius: "9999px",
+  borderBottomLeftRadius: "9999px",
+  borderBottomRightRadius: "9999px",
+  background: "#38383C",
+  color: "#C3C3C3",
+  width: "100%",
+  // zIndex: 1,
+
+  ".active": {
+    backgroundColor: "#1D3B30",
+
+    borderTopLeftRadius: "9999px",
+    borderTopRightRadius: "9999px",
+    borderBottomLeftRadius: "9999px",
+    borderBottomRightRadius: "9999px",
+
+    position: "relative",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 10,
+    padding: "9px 24px",
+    fontSize: 14,
+    lineHeight: "20px",
+    textTransform: "none",
+    fontWeight: 500,
+    width: "100%",
+    backgroundClip: "padding-box",
+    border: "1px solid transparent",
+    // zIndex: 1,
+    // pointerEvents: "none",
+
+    "&:before": {
+      content: `""`,
+      position: "absolute",
+      inset: 0,
+      zIndex: -1,
+      margin: "-1px",
+      background: "linear-gradient(to right bottom, #FDCD9D, #F7EF82)",
+      borderRadius: "inherit",
+      pointerEvents: "none",
+    },
+  },
+}));
+
+export const TabItem = styled("div")(() => ({
+  width: "100%",
+  background: "transparent",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: "8px 16px",
+  fontSize: "14px",
+  fontStyle: "normal",
+  fontWeight: "500",
+  lineHeight: "20px",
+  cursor: "pointer",
+}));
+
+export const SignupWrapper = styled("div")(() => ({
+  ".mb-30": {
+    marginBottom: 30,
+  },
+
+  ".mb-16": {
+    marginBottom: 16,
+  },
+
+  ".text-change-wallet": {
+    textAlign: "center",
+    marginTop: 40,
+    cursor: "pointer",
+  },
+}));
+
+export const TextAgree = styled("div")(() => ({
+  display: "flex",
+  alignItems: "center",
+  fontSize: "14px",
+  fontStyle: "normal",
+  fontWeight: 500,
+  lineHeight: "20px",
+  color: "#FFFFFF",
+  marginBottom: 32,
+}));
+
+export const CheckboxAgreeLogo = styled(CheckboxAgreeIcon)(() => ({
+  marginRight: 10,
+  cursor: "pointer",
+}));
+
+export const UncheckboxAgreeLogo = styled(UncheckboxAgreeIcon)(() => ({
+  marginRight: 10,
+  cursor: "pointer",
 }));
